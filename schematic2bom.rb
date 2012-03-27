@@ -17,9 +17,11 @@ schematic.each do |line|
 	if 0 == line.index("$Comp") then
 		csvline = ""
 	elsif 0 == line.index("$EndComp") then
+		# remove last seperator + space and write it into the output file
 		csvfile.puts csvline.chop.chop
 	end
-	
+
+	# split the string at all "s and only add the field content
 	# F 4 "<FIELD CONTENT>" H 7350 2900 60  0001 C CNN "<FIELD NAME>"
 	if 70 == line[0] then
 		csvline = csvline + line.split("\"")[1] + "; "
