@@ -2,10 +2,14 @@
 
 # a simple Ruby script to extract the BOM from a KiCAD schematic
 #
+# be warned, this script is *very* optimistic about the running conditions
+#
 # usage: ./schematic2bom.rb <SCHEMATICFILENAME>
 
 schematicfilename = ARGV[0]
 schematic = File.open(schematicfilename, "r")
+csvfilefilename = schematicfilename[0..schematicfilename.length-4] + "csv"
+csvfile = File.open(csvfilefilename, "w")
 csvline = ""
 
 schematic.each do |line|
@@ -13,14 +17,14 @@ schematic.each do |line|
 	if 0 == line.index("$Comp") then
 		csvline = ""
 	elsif 0 == line.index("$EndComp") then
-		puts csvline.chop.chop
+		csvfile.puts csvline.chop.chop
 	end
 	
 	# F 4 "<FIELD CONTENT>" H 7350 2900 60  0001 C CNN "<FIELD NAME>"
 	if 70 == line[0] then
-		csvline = csvline + line.split("\"")[1] + ", "
-		#csvline = csvline + line.split(" ")[10]
+		csvline = csvline + line.split("\"")[1] + "; "
 	end
 end
 
 schematic.close
+csvfile.close
