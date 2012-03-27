@@ -5,7 +5,8 @@ a simple Ruby script to convert KiCAD schematics to BOMs (in CSV)
 
 Usage
 -----
-``usage: ./schematic2bom.rb <SCHEMATICFILENAME>``
+*Be warned, this script is **very** optimistic about the running conditions.*
+simply run ``./schematic2bom.rb <SCHEMATICFILENAME>``
 
 Links
 =====
